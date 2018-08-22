@@ -14,8 +14,8 @@ I am doing this with Open Source course materials from [HackerBay University. ](
 ## Tasks Summery ( Completed - 0%)
 |Task No|Description|Status|Other| 
 |--|--|--|--|
-| [01](#Task-01) | Creating Simple API | Code Review Pending |-|
-| [02](#Task-02) | Connecting To The Database | WIP |-|
+| [01](#task-01) | Creating Simple API | Finished |-|
+| [02](#task-02) | Connecting To The Database | WIP |-|
 
 ## Each Task Details
 ### Task 01
