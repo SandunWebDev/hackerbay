@@ -11,6 +11,12 @@ I am doing this with Open Source course materials from [HackerBay University. ](
  - Normally you can interact with program through http://localhost:3000
  - Individual guides for tasks can be found below.
 
+## Used Technologies & Packages
+|FrontEnd|BackEnd|Tools|Other| 
+|--|--|--|--|
+| React  |NodeJS + Express  |ESLint + AirBnB + Prettier  ||
+|  |  |  ||
+
 ## Tasks Summery ( Completed - 0%)
 |Task No|Description|Status|Other| 
 |--|--|--|--|
