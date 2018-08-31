@@ -10,8 +10,8 @@ module.exports = {
     },
     database: {
       name: process.env.DBNAME || "hackerbay",
-      username: process.env.DBUSERNAME || "admin",
-      password: process.env.DBPASSWORD || "admin"
+      username: process.env.DBUSERNAME || "devadmin",
+      password: process.env.DBPASSWORD || "devadmin"
     }
   },
   production: {
