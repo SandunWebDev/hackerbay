@@ -1,6 +1,9 @@
 const express = require("express");
 const Sequelize = require("sequelize");
 
+// Loading Routes
+const dataRoute = require("./routes/data");
+
 // Loading correct configurations depending on "NODE_ENV".
 const NODE_ENV =
   process.env.NODE_ENV === "production" ? "production" : "development";
@@ -40,21 +43,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /* --- Routes  ---*/
-app.get("/", (req, res) => {
-  res.json({ status: "success" });
-});
-
-let postData = ""; // Temporary database like variable to save data we recive in "/data" POST route.
-
-app
-  .route("/data")
-  .post((req, res) => {
-    postData = req.body.data;
-    res.json({ data: req.body.data });
-  })
-  .get((req, res) => {
-    res.json({ data: postData });
-  });
+app.get("/", (req, res) => res.json({ status: "success" }));
+app.use("/data", dataRoute);
 
 // Start the server.
 app.listen(config.server.PORT, () =>
