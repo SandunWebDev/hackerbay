@@ -1,5 +1,10 @@
 const express = require("express");
 
+// Loading correct configurations depending on "NODE_ENV".
+const NODE_ENV = process.env.NODE_ENV || "development";
+const config = require("./configs/main")[NODE_ENV];
+
+console.log(config);
 const app = express();
 
 // Parsing POST request's body data and adding those data to "req.body"
@@ -23,5 +28,11 @@ app
     res.json({ data: postData });
   });
 
-// Start the server and listen at port 3000.
-app.listen(3000, () => console.log("Server Started At Port 3000"));
+// Start the server.
+app.listen(config.server.PORT, () =>
+  console.log(
+    `Server is running on "${NODE_ENV}" enviroment @ port ${
+      config.server.PORT
+    }.`
+  )
+);
