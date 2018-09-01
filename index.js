@@ -1,40 +1,15 @@
 const express = require("express");
-const Sequelize = require("sequelize");
+const passport = require("passport");
+
+// Loading "sequalize" instance & Connecting to database
+const sequelize = require("./database/connect");
 
 // Loading Routes
 const dataRoute = require("./routes/data");
+const userRoute = require("./routes/user");
 
 // Loading correct configurations depending on "NODE_ENV".
-const NODE_ENV =
-  process.env.NODE_ENV === "production" ? "production" : "development";
-const config = require("./configs/main")[NODE_ENV];
-
-// Connecting & Configuring database credentials.
-const sequelize = new Sequelize(
-  config.database.name,
-  config.database.username,
-  config.database.password,
-  {
-    dialect: "postgres"
-  }
-);
-
-// Checking databse connection.
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log(
-      `Successfully connected to "${config.database.name}" database as "${
-        config.database.username
-      }" user.`
-    );
-  })
-  .catch(err => {
-    console.error("Unable to connect to the database:", err);
-  });
-
-// Loading postgres models.
-const User = sequelize.import(`${__dirname}/database/models/User`);
+const config = require("./configs/main");
 
 const app = express();
 
@@ -42,14 +17,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(passport.initialize());
+
 /* --- Routes  ---*/
 app.get("/", (req, res) => res.json({ status: "success" }));
 app.use("/data", dataRoute);
+app.use("/user", userRoute); // Contain user signup, login paths.
 
 // Start the server.
 app.listen(config.server.PORT, () =>
   console.log(
-    `Server is running on "${NODE_ENV}" enviroment @ port ${
+    `Server is running on "${config.NODE_ENV}" enviroment @ port ${
       config.server.PORT
     }.`
   )
