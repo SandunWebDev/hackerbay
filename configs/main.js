@@ -1,7 +1,4 @@
-/*
- This file contains configurations for "PRDOCUTION" and "DEVELOPMENT" enviroment.
- Pass enviroment variables is want to override these.
-*/
+/* Pass enviroment variables is want to override these. */
 
 // Setting up "NODE_ENV".
 const NODE_ENV =
@@ -24,6 +21,7 @@ const configs = {
       expiresIn: process.env.JWTEXPIRES || "60s"
     }
   },
+
   production: {
     server: {
       NODE_ENV,

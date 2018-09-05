@@ -1,23 +1,12 @@
-/*
-* Routes for => /user/ path 
-*/
-
 const express = require("express");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// Passport Strategies
-const local = require("../configs/passportStrategies");
-
-// Loading correct configurations depending on "NODE_ENV".
+const sequelize = require("../database/connect");
 const config = require("../configs/main");
 
-// Loading "sequalize" instance & Connecting to database
-const sequelize = require("../database/connect");
-// Loading postgres models.
-const User = sequelize.import("../database/models/User");
-
+const User = sequelize.import("../database/models/User"); // Loading postgres models through its loading system.
 const router = express.Router();
 
 router.post("/signup", (req, res) => {
@@ -31,10 +20,9 @@ router.post("/signup", (req, res) => {
     });
   }
 
-  // Check if a user is registered to this email already.
+  // Check if a user is registered to this email already. If not create one.
   User.count({ where: { email } })
     .then(result => {
-      // result larger than 0 mean user exist already.
       if (result > 0) {
         return res.status(400).json({
           success: false,
@@ -42,9 +30,8 @@ router.post("/signup", (req, res) => {
         });
       }
 
-      // Came to here mean user doens't exist. So let's create new one.
+      // Creating new hash, user & token.
       bcrypt.hash(password, 10, (err, hash) => {
-        // Creating new hash from plain password.
         if (err) {
           res.status(500).json({
             success: false,
@@ -52,13 +39,11 @@ router.post("/signup", (req, res) => {
           });
         }
 
-        // Creating new user.
         User.create({
           email,
           password: hash
         })
           .then(createdUser => {
-            // Creating JWT token.
             const token = jwt.sign(
               { id: createdUser.id },
               config.jwt.secretKey,
@@ -102,7 +87,6 @@ router.post("/login", (req, res, next) => {
       // "user" not populated mean not authenticated.
       if (!user) return res.status(500).json({ success: false, errMsg: info });
 
-      // User successfully authenticated.
       return res.status(200).json({ success: true, token: user.token });
     }
   )(req, res, next);

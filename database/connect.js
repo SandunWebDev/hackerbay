@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 
-// Loading correct configurations depending on "NODE_ENV".
 const config = require("../configs/main");
 
 // Connecting & Configuring database credentials.

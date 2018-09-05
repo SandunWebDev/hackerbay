@@ -7,7 +7,7 @@ I am doing this with Open Source course materials from [HackerBay University. ](
  - Clone the repository.
  - `cd` into the source directory.
  - run `npm install` to install dependencies.
- - run `npm start` to start the program. 
+ - run `npm start` to start the server. 
 		
 	- Make sure postgre server is already running. In dev mode, by default it connect to "hackerbay" database with username "devadmin". If needed change default values in "./configs/main.js" or pass specific env. varaiables.
  - Normally you can interact with program through http://localhost:3000
