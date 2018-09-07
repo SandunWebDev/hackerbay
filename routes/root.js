@@ -1,9 +1,9 @@
 const express = require("express");
 
+const { rootPath_GET } = require("./rootRouteController");
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({ status: "success" });
-});
+router.get("/", rootPath_GET);
 
 module.exports = router;

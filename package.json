@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
-    "start": "node index.js",
-    "test": "mocha || exit 0"
+    "dev" : "NODE_ENV=development node index.js",
+    "start": "NODE_ENV=production node index.js",
+    "test": "NODE_ENV=test mocha --recursive --watch|| exit 0",
+    "test:unit": "NODE_ENV=test mocha './test/unit/' --recursive --watch|| exit 0",
+    "test:inte": "NODE_ENV=test mocha './test/integration/' --recursive --watch|| exit 0"
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +34,8 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
-    "prettier": "^1.14.2"
+    "node-mocks-http": "^1.7.0",
+    "prettier": "^1.14.2",
+    "supertest": "^3.3.0"
   }
 }
