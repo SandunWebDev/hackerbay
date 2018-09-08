@@ -2,15 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 
-let postData = ""; // Temporary database like variable to save data we recive in "/data" POST route.
+const { dataRouteGET, dataRoutePOST } = require("./dataRouteController");
 
-router.get("/", (req, res) => {
-  res.json({ data: postData });
-});
+router.get("/", dataRouteGET);
 
-router.post("/", (req, res) => {
-  postData = req.body.data;
-  res.json({ data: req.body.data });
-});
+router.post("/", dataRoutePOST);
 
 module.exports = router;

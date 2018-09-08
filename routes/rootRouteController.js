@@ -1,3 +1,3 @@
-module.exports.rootPath_GET = (req, res) => {
+module.exports.rootPathGET = (req, res) => {
   res.status(200).json({ status: "success" });
 };
