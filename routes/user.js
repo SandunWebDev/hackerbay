@@ -20,7 +20,7 @@ router.post("/login", (req, res, next) => {
       }
 
       // "user" not populated mean not authenticated.
-      if (!user) return res.status(500).json({ success: false, errMsg: info });
+      if (!user) return res.status(400).json({ success: false, errMsg: info });
 
       return res.status(200).json({ success: true, token: user.token });
     }

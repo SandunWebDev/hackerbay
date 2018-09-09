@@ -3,6 +3,11 @@
 // Setting up "NODE_ENV".
 const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
 
+// Dirty hack to hide console.xxx in test enviroment so they don't distract test results.
+if (NODE_ENV === "test") {
+  console.info = () => {};
+}
+
 // All Configs
 const configs = {
   development: {
