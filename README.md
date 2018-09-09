@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/SandunWebDev/hackerbay.svg?branch=task3)](https://travis-ci.com/SandunWebDev/hackerbay)
+
 # Hackerbay Server Monitoring Project
 In this repository, I am creating a Server Monitoring Software step by step from scratch.  Its workload spread throughout 20 Tasks and each task is in a separate branch. Once task is finished and code reviewed its merged with master. So final product is on master branch.
 
@@ -7,8 +9,8 @@ I am doing this with Open Source course materials from [HackerBay University. ](
  - Clone the repository.
  - `cd` into the source directory.
  - Run `npm install` to install dependencies.
- - Then run `npm run dev`.
-- Normally you can interact with program through http://localhost:3000
+ - Then run `npm start`.
+ - Normally you can interact with program through http://localhost:3000
  - Individual guides for tasks can be found below.
 		
 NOTE : Make sure postgre server is already running. In dev mode, by default it connect to "hackerbay" database with username "devadmin". If needed change default values in "./configs/main.js" or pass specific env. varaiables. 
@@ -17,14 +19,14 @@ NOTE : Make sure postgre server is already running. In dev mode, by default it c
 ## How To Test
  - `npm test` - Run full test suite with coverage. (Unit + Integration)
 -  `npm run test:unit` - Only run unit tests in watch mode.
--  `npm run test:inte` - Only run integration tests in watch mode.
+-  `npm run test:integration` - Only run integration tests in watch mode.
 -  `npm run test:all` - Run all tests in watch mode.
 
 ## Used Technologies & Main Packages
 |FrontEnd|BackEnd|Tools|Other| 
 |--|--|--|--|
 | React  |NodeJS + Express  |ESLint + AirBnB + Prettier  | Postman |
-|  | Postgres + Sequalize  | Mocha + Chai + Sinon + Istanbul + TravisCI + CodeCov ||
+|  | Postgres + Sequalize  | Mocha + Chai + Sinon + Istanbul | TravisCI + CodeCov |
 |  | Passport + BCryprt + JWT |  ||
 
 
@@ -55,7 +57,7 @@ NOTE : Make sure postgre server is already running. In dev mode, by default it c
 
 ### Task 03
 
-Added unit and integration test to following API paths.
+Added unit and integration test to following API paths. Also added continuous integration through TravisCI.
   - /
   - /data
   - /user/signup
