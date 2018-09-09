@@ -1,9 +1,9 @@
 const express = require("express");
 
-const { rootPath_GET } = require("./rootRouteController");
+const { rootPathGET } = require("./rootRouteController");
 
 const router = express.Router();
 
-router.get("/", rootPath_GET);
+router.get("/", rootPathGET);
 
 module.exports = router;

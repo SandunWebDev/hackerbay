@@ -3,6 +3,7 @@
     "rules": {
         "no-console":"off",
         "consistent-return":"off",
-        "array-callback-return":"off"
+        "array-callback-return":"off",
+        "camelcase":"off"
     }
 }

@@ -2,6 +2,8 @@ const request = require("supertest");
 
 const app = require("../../app");
 
+// Note - Below integration test are for just to experiment integration tests. All these test cases already cover in unit tests.
+
 describe("'/' Root Path", function() {
   describe("with GET request", function() {
     it("Should return status code 200 when successfull.", function(done) {
