@@ -1,29 +1,14 @@
 const { expect } = require("chai");
 const request = require("supertest");
-const sequelize = require("../../database/connect");
-
-const User = sequelize.import("../../database/models/User"); // Loading postgres models through its loading system.
+const { User } = require("../../database/connect").models;
 
 const app = require("../../app");
 
 describe("'/user' Route", () => {
-  describe("'/user/signup' With POST ", () => {
-    beforeEach(() => {
-      // Making sure "example@gmail.com" user doesn't exist.
-      User.findOne({ where: { email: "example@gmail.com" } }).then(user => {
-        if (user) {
-          user.destroy();
-        }
-      });
-    });
-
-    after(() => {
-      // Cleaning up "example@gmail.com" user.
-      User.findOne({ where: { email: "example@gmail.com" } }).then(user => {
-        if (user) {
-          user.destroy();
-        }
-      });
+  describe("'/user/signup' With POST ", function() {
+    beforeEach(async () => {
+      // Making sure "example@gmail.com" user don't exist.
+      await User.destroy({ where: { email: "example@gmail.com" } });
     });
 
     it("Should return '{sucess: true, session:...} & status code 200 when user succesfully created on database.", done => {
@@ -44,33 +29,26 @@ describe("'/user' Route", () => {
   });
 
   describe("'/user/login' With POST + Passport ", () => {
-    before(() => {
+    beforeEach(async () => {
       // Making sure "example@gmail.com" user exist.
-      User.findOne({ where: { email: "example@gmail.com" } }).then(user => {
-        if (!user) {
-          User.create({
-            email: "example@gmail.com",
-            password:
-              "$2b$10$lNKYy1pa5NuVJRr23e.zGOWB.AoJo1305lmAw2pz/X4EGUqZnNU.e" // Hash for password "supersecret"
-          });
-        }
+      const userAvailable = await User.count({
+        where: { email: "example@gmail.com" }
       });
+      if (!userAvailable) {
+        await User.create({
+          email: "example@gmail.com",
+          password:
+            "$2b$10$lNKYy1pa5NuVJRr23e.zGOWB.AoJo1305lmAw2pz/X4EGUqZnNU.e" // Hash for password "supersecret"
+        });
+      }
 
       // Making sure "dontexist@gmail.com" user doesn't exist.
-      User.findOne({ where: { email: "dontexist@gmail.com" } }).then(user => {
-        if (user) {
-          user.destroy();
-        }
-      });
+      await User.destroy({ where: { email: "dontexist@gmail.com" } });
     });
 
-    afterEach(() => {
+    afterEach(async () => {
       // Cleaning up "example@gmail.com" user.
-      User.findOne({ where: { email: "example@gmail.com" } }).then(user => {
-        if (user) {
-          user.destroy();
-        }
-      });
+      await User.destroy({ where: { email: "example@gmail.com" } });
     });
 
     it("Should return '{sucess: true, session:...} & status code 200 when user succesfully logged in.", done => {

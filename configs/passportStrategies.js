@@ -4,9 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const config = require("../configs/main");
-const sequelize = require("../database/connect");
-
-const User = sequelize.import("../database/models/User");
+const { User } = require("../database/connect").models;
 
 passport.use(
   new LocalStrategy(
@@ -38,7 +36,7 @@ passport.use(
             }
           });
         })
-        .catch(err => done("Error : Database Error"));
+        .catch(() => done("Error : Database Error"));
     }
   )
 );

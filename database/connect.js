@@ -22,18 +22,14 @@ const sequelize = new Sequelize(
   }
 );
 
-// Checking databse connection.
-sequelize
-  .authenticate()
-  .then(() => {
-    console.info(
-      `Successfully connected to "${config.database.name}" database as "${
-        config.database.username
-      }" user.`
-    );
-  })
-  .catch(err => {
-    console.info("Unable to connect to the database:", err);
-  });
+// Generating all models.
+const models = {};
+models.User = require("./models/User")(sequelize, Sequelize);
 
-module.exports = sequelize;
+// Create table structure if they not exist.
+sequelize.sync();
+
+module.exports = {
+  sequelize,
+  models
+};

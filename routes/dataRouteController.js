@@ -3,7 +3,7 @@ module.exports.tempStorage = tempStorage;
 
 module.exports.dataRouteGET = (req, res) => {
   if (!tempStorage.data) {
-    return res.status(400);
+    return res.status(400).end();
   }
 
   return res.status(200).json({ data: tempStorage.data });
@@ -14,5 +14,5 @@ module.exports.dataRoutePOST = (req, res) => {
     tempStorage.data = req.body.data;
     return res.status(200).json({ data: tempStorage.data });
   }
-  return res.status(400);
+  return res.status(400).end();
 };

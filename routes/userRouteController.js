@@ -1,15 +1,13 @@
 const bcryptModule = require("bcrypt");
 const jwtModule = require("jsonwebtoken");
 
-const sequelize = require("../database/connect");
+const { User: UserModel } = require("../database/connect").models;
 const config = require("../configs/main");
-
-const UserModel = sequelize.import("../database/models/User"); // Loading postgres models through its loading system.
 
 module.exports.user_signupRoutePOST = (
   req,
   res,
-  { User = UserModel, bcrypt = bcryptModule, jwt = jwtModule } = {}
+  { User = UserModel, bcrypt = bcryptModule, jwt = jwtModule } = {} // Object destructuring for easy dependency injection.
 ) => {
   const { email, password } = req.body;
 

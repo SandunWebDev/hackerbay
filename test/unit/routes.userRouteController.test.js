@@ -3,9 +3,7 @@ const sinon = require("sinon");
 const httpMocks = require("node-mocks-http");
 const events = require("events");
 
-const sequelize = require("../../database/connect");
-
-const User = sequelize.import("../../database/models/User"); // Loading postgres models through its loading system.
+const { User } = require("../../database/connect").models;
 
 const { user_signupRoutePOST } = require("../../routes/userRouteController");
 
