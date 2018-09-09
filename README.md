@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/SandunWebDev/hackerbay.svg?branch=task3)](https://travis-ci.com/SandunWebDev/hackerbay)
+[![codecov](https://codecov.io/gh/SandunWebDev/hackerbay/branch/master/graph/badge.svg)](https://codecov.io/gh/SandunWebDev/hackerbay)
 
 # Hackerbay Server Monitoring Project
 In this repository, I am creating a Server Monitoring Software step by step from scratch.  Its workload spread throughout 20 Tasks and each task is in a separate branch. Once task is finished and code reviewed its merged with master. So final product is on master branch.
