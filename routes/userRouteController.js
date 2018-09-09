@@ -64,7 +64,7 @@ module.exports.user_signupRoutePOST = (
       });
     })
     // Error handling for "User.count()"
-    .catch(err =>
+    .catch(() =>
       res.status(500).json({
         success: false,
         errMsg: "Error : Database Error"
