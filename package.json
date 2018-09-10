@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./",
     "start": "node index.js",
-    "test": "mocha --recursive",
+    "test": "nyc mocha --recursive",
     "test:all": "NODE_ENV=test nyc mocha --recursive --watch",
     "test:unit": "NODE_ENV=test mocha './test/unit/' --recursive --watch",
     "test:integration": "NODE_ENV=test mocha './test/integration/' --recursive --watch",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "codecov": "^3.1.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.0.1",
