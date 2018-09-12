@@ -52,7 +52,7 @@ RESPONSE
 
 ## Issues Noted
 
-- Bad code structure that may not work well with lengthy endpoints ie in app.get('/data',(req,res)=>{...}).post((req,res)=>{...})
+- Bad code structure that may not work well with lengthy endpoints ie in app.get('/data',(req,res)=>{...}).post('/data',(req,res)=>{...})
 - Logging.
 - ERror repsonse on POST to roor path.
 
