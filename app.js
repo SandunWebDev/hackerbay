@@ -21,8 +21,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 
-app.get("/", rootRoute);
+app.use("/", rootRoute);
 app.use("/data", dataRoute);
 app.use("/user", userRoute);
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ status: false, errMsg: "Server Error." });
+});
+
+app.use((req, res) => {
+  res.status(404).json({ status: false, errMsg: "Requested path not found." });
+});
 
 module.exports = app;

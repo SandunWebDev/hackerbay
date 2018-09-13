@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
+    "dev": "NODE_ENV=development nodemon index.js", 
     "start": "node index.js",
     "test": "nyc mocha --recursive",
     "test:all": "NODE_ENV=test nyc mocha --recursive --watch",
@@ -37,6 +38,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "mocha": "^5.2.0",
     "node-mocks-http": "^1.7.0",
+    "nodemon": "^1.18.4",
     "nyc": "^13.0.1",
     "prettier": "^1.14.2",
     "sinon": "^6.2.0",
