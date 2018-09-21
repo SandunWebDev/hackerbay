@@ -9,13 +9,13 @@ module.exports.user_signupRoutePOST = (
   res,
   { User = UserModel, bcrypt = bcryptModule, jwt = jwtModule } = {} // Object destructuring for easy dependency injection.
 ) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
 
   // Check we have recived the email & password in request body.
-  if (!email || !password) {
+  if (!email || !password || !name) {
     return res.status(400).json({
       success: false,
-      errMsg: "Error : Please provide email and password to login."
+      errMsg: "Name / Email / Password not provided."
     });
   }
 
@@ -25,7 +25,7 @@ module.exports.user_signupRoutePOST = (
       if (result > 0) {
         return res.status(400).json({
           success: false,
-          errMsg: "Error : User already Exist."
+          errMsg: "User already Exist."
         });
       }
       // Creating new hash, user & token.
@@ -33,11 +33,12 @@ module.exports.user_signupRoutePOST = (
         if (err) {
           res.status(500).json({
             success: false,
-            errMsg: "Error : Server Error"
+            errMsg: "Server Error"
           });
         }
 
         User.create({
+          name,
           email,
           password: hash
         })
@@ -56,7 +57,7 @@ module.exports.user_signupRoutePOST = (
           .catch(createErr => {
             res.status(500).json({
               success: false,
-              errMsg: `Error :  ${createErr.errors[0].type}`
+              errMsg: `${createErr.errors[0].type}`
             });
           });
       });
@@ -65,7 +66,7 @@ module.exports.user_signupRoutePOST = (
     .catch(() =>
       res.status(500).json({
         success: false,
-        errMsg: "Error : Database Error"
+        errMsg: "Database Error"
       })
     );
 };

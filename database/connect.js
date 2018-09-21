@@ -2,8 +2,10 @@ const Sequelize = require("sequelize");
 
 const config = require("../configs/main");
 
-// Becaue in test enviroment logging SQL command dirty the result report.
-const enableSqlLogging = config.server.NODE_ENV !== "test";
+// Because in test enviroment logging SQL command dirty the result report.
+// Also new sequalze version prefer function instead of just saying "true" for logging. Thats why using "console.log".
+const enableSqlLogging =
+  config.server.NODE_ENV !== "test" ? console.log : false;
 
 // Connecting & Configuring database credentials.
 const sequelize = new Sequelize(

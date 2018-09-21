@@ -15,6 +15,7 @@ describe("'/user' Route", () => {
       request(app)
         .post("/user/signup")
         .send({
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         })
@@ -36,6 +37,7 @@ describe("'/user' Route", () => {
       });
       if (!userAvailable) {
         await User.create({
+          name: "John Doe",
           email: "example@gmail.com",
           password:
             "$2b$10$lNKYy1pa5NuVJRr23e.zGOWB.AoJo1305lmAw2pz/X4EGUqZnNU.e" // Hash for password "supersecret"

@@ -1,7 +1,18 @@
-/* Pass enviroment variables is want to override these. */
+/* Pass enviroment variables if want to override these. */
 
-// Setting up "NODE_ENV".
-const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+let {
+  NODE_ENV,
+  PORT,
+  CORS_WHITE_LIST,
+  DBNAME,
+  DBUSERNAME,
+  DBPASSWORD,
+  JWTSECRET,
+  JWTEXPIRES
+} = process.env;
+
+NODE_ENV = NODE_ENV || "development"; // Setting up "NODE_ENV" to development if nothing passed.
+CORS_WHITE_LIST = CORS_WHITE_LIST && CORS_WHITE_LIST.split(","); // Setting up "CORS_WHITE_LIST" to array if passed.
 
 // Dirty hack to hide console.xxx in test enviroment so they don't distract test results.
 if (NODE_ENV === "test") {
@@ -13,48 +24,51 @@ const configs = {
   development: {
     server: {
       NODE_ENV,
-      PORT: process.env.PORT || 3000
+      PORT: PORT || 4000,
+      CORSWhiteList: CORS_WHITE_LIST || ["http://localhost:3000"]
     },
     database: {
-      name: process.env.DBNAME || "hackerbay",
-      username: process.env.DBUSERNAME || "devadmin",
-      password: process.env.DBPASSWORD || "devadmin"
+      name: DBNAME || "hackerbay",
+      username: DBUSERNAME || "devadmin",
+      password: DBPASSWORD || "devadmin"
     },
     jwt: {
-      secretKey: process.env.JWTSECRET || "mySuperSecretsP4$$w0rD",
-      expiresIn: process.env.JWTEXPIRES || "60s"
+      secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
+      expiresIn: JWTEXPIRES || "60s"
     }
   },
 
   test: {
     server: {
       NODE_ENV,
-      PORT: process.env.PORT || 3000
+      PORT: PORT || 4000,
+      CORSWhiteList: CORS_WHITE_LIST || ["http://localhost:3000"]
     },
     database: {
-      name: process.env.DBNAME || "hackerbay",
-      username: process.env.DBUSERNAME || "devadmin",
-      password: process.env.DBPASSWORD || "devadmin"
+      name: DBNAME || "hackerbay",
+      username: DBUSERNAME || "devadmin",
+      password: DBPASSWORD || "devadmin"
     },
     jwt: {
-      secretKey: process.env.JWTSECRET || "mySuperSecretsP4$$w0rD",
-      expiresIn: process.env.JWTEXPIRES || "60s"
+      secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
+      expiresIn: JWTEXPIRES || "60s"
     }
   },
 
   production: {
     server: {
       NODE_ENV,
-      PORT: process.env.PORT || 80
+      PORT: PORT || 80,
+      CORSWhiteList: CORS_WHITE_LIST || []
     },
     database: {
-      name: process.env.DBNAME || "ADD SERVER DBNAME HERE",
-      username: process.env.DBUSERNAME || "ADD SERVER USERNAME HERE",
-      password: process.env.DBPASSWORD || "ADD SERVER PASSWORD HERE"
+      name: DBNAME || "ADD SERVER DBNAME HERE",
+      username: DBUSERNAME || "ADD SERVER USERNAME HERE",
+      password: DBPASSWORD || "ADD SERVER PASSWORD HERE"
     },
     jwt: {
-      secretKey: process.env.JWTSECRET || "ADD SUPER JWT SECRET HERE",
-      expiresIn: process.env.JWTEXPIRES || "ADD JWT EXPIRE DATE HERE"
+      secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
+      expiresIn: JWTEXPIRES || "ADD JWT EXPIRE DATE HERE"
     }
   }
 };

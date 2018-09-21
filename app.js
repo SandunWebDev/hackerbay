@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const config = require("./configs/main");
 
@@ -15,6 +16,8 @@ const app = express();
 if (config.server.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
+
+app.use(cors({ origin: config.server.CORSWhiteList }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

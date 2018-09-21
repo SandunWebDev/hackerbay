@@ -6,6 +6,13 @@ module.exports = (sequelize, DataTypes) =>
       primaryKey: true,
       allowNull: false
     },
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,

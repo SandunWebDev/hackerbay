@@ -88,6 +88,7 @@ describe("'/user' Route", function() {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         }
@@ -116,6 +117,7 @@ describe("'/user' Route", function() {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         }
@@ -141,6 +143,7 @@ describe("'/user' Route", function() {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         }
@@ -174,6 +177,7 @@ describe("'/user' Route", function() {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         }
@@ -215,6 +219,7 @@ describe("'/user' Route", function() {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
+          name: "John Doe",
           email: "example@gmail.com",
           password: "supersecret"
         }
