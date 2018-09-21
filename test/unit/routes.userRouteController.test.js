@@ -230,7 +230,9 @@ describe("'/user' Route", function() {
 
       // Simulate user successfully created.
       sinon.stub(User, "create").resolves({
-        id: "UNIQUEID123345"
+        id: "UNIQUEID123345",
+        email: "example@gmail.com",
+        name: "example@gmail.com"
       });
 
       // Simulate hasing successfully happened.
@@ -248,7 +250,12 @@ describe("'/user' Route", function() {
         setTimeout(() => {
           const recivedData = JSON.parse(res._getData());
           expect(recivedData).to.have.deep.include({ success: true });
-          expect(recivedData).to.have.key(["success", "session"]);
+          expect(recivedData).to.have.key([
+            "success",
+            "session",
+            "name",
+            "email"
+          ]);
           expect(res.statusCode).to.equal(200);
           done();
         }, 0);

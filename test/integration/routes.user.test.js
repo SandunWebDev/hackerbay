@@ -23,7 +23,7 @@ describe("'/user' Route", () => {
         .end(function(err, res) {
           expect(res.statusCode).to.be.equal(200);
           expect(res.body).to.have.deep.include({ success: true });
-          expect(res.body).to.have.key(["success", "session"]);
+          expect(res.body).to.have.key(["success", "session", "name", "email"]);
           done();
         });
     });
@@ -64,7 +64,7 @@ describe("'/user' Route", () => {
         .end(function(err, res) {
           expect(res.statusCode).to.be.equal(200);
           expect(res.body).to.have.deep.include({ success: true });
-          expect(res.body).to.have.key(["success", "token"]);
+          expect(res.body).to.have.key(["success", "session", "email", "name"]);
           done();
         });
     });

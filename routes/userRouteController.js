@@ -51,7 +51,9 @@ module.exports.user_signupRoutePOST = (
 
             return res.status(200).json({
               success: true,
-              session: token
+              session: token,
+              name,
+              email
             });
           })
           .catch(createErr => {

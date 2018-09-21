@@ -18,12 +18,12 @@ passport.use(
       User.findOne({ where: { email } })
         .then(user => {
           if (!user) {
-            return done(null, false, "Error : User doesn't exist.");
+            return done(null, false, "User doesn't exist.");
           }
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err || !isMatch) {
-              return done(null, false, "Error : Invalid password.");
+              return done(null, false, "Invalid password.");
             }
 
             if (isMatch) {
@@ -32,11 +32,15 @@ passport.use(
               });
 
               // Authentication successful. This populate "req.user" with this details.
-              return done(null, { token });
+              return done(null, {
+                token,
+                name: user.name,
+                email: user.email
+              });
             }
           });
         })
-        .catch(() => done("Error : Database Error"));
+        .catch(() => done("Database Error"));
     }
   )
 );
