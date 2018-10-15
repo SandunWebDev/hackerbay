@@ -5,20 +5,44 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
+    "dev": "NODE_ENV=development nodemon index.js",
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha --recursive",
+    "test:all": "NODE_ENV=test nyc mocha --recursive --watch",
+    "test:unit": "NODE_ENV=test mocha './test/unit/' --recursive --watch",
+    "test:integration": "NODE_ENV=test mocha './test/integration/' --recursive --watch",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "bcrypt": "^3.0.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "codecov": "^3.1.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^2.6.2",
-    "prettier": "^1.14.2"
+    "mocha": "^5.2.0",
+    "node-mocks-http": "^1.7.0",
+    "nodemon": "^1.18.4",
+    "nyc": "^13.0.1",
+    "prettier": "^1.14.2",
+    "sinon": "^6.2.0",
+    "supertest": "^3.3.0"
   }
 }

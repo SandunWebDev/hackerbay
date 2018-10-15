@@ -1,0 +1,20 @@
+language: node_js
+node_js: 
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install -g codecov
+  - npm install
+after_success: 
+  - npm run report-coverage
+env:
+  -NODE_ENV=test
+services:
+  - postgresql
+addons:
+    postgresql: "9.6"
+before_script:
+  - psql -c "CREATE DATABASE hackerbay;" -U postgres
+  - psql -c "CREATE USER devadmin SUPERUSER LOGIN PASSWORD 'devadmin';" -U postgres
