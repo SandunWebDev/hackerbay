@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/SandunWebDev/hackerbay.svg?branch=task3)](https://travis-ci.com/SandunWebDev/hackerbay)
-[![codecov](https://codecov.io/gh/SandunWebDev/hackerbay/branch/task3/graph/badge.svg)](https://codecov.io/gh/SandunWebDev/hackerbay)
+[![Build Status](https://travis-ci.com/SandunWebDev/hackerbay.svg?branch=master)](https://travis-ci.com/SandunWebDev/hackerbay)
+[![codecov](https://codecov.io/gh/SandunWebDev/hackerbay/branch/master/graph/badge.svg)](https://codecov.io/gh/SandunWebDev/hackerbay)
 
 # Hackerbay Server Monitoring Project - BackEnd
 Backend part of the Server Monitoring Project. Frontend part can be found on [Hackerbay - FrontEnd.](https://github.com/SandunWebDev/hackerbay-frontend/)
@@ -9,7 +9,7 @@ Backend part of the Server Monitoring Project. Frontend part can be found on [Ha
  - `cd` into the source directory.
  - Run `npm install` to install dependencies.
  - Then run `npm start`.
- - Normally you can interact with program through http://localhost:3000
+ - Normally you can interact with program through http://localhost:4000
 		
 NOTE : Make sure postgre server is already running. In dev mode, by default it connect to "hackerbay" database with username "devadmin". If needed change default values in "./configs/main.js" or pass specific env. varaiables. 
 
