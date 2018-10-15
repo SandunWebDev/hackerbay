@@ -5,11 +5,14 @@ const cors = require("cors");
 
 const config = require("./configs/main");
 
-require("./configs/passportStrategies");
+require("./configs/passport/passportStrategies");
 
 const rootRoute = require("./routes/root");
 const dataRoute = require("./routes/data");
 const userRoute = require("./routes/user");
+const websiteRoute = require("./routes/website");
+
+const customPassportAuthenticators = require("./configs/passport/customPassportAuthenticators");
 
 const app = express();
 
@@ -27,6 +30,11 @@ app.use(passport.initialize());
 app.use("/", rootRoute);
 app.use("/data", dataRoute);
 app.use("/user", userRoute);
+app.use(
+  "/website",
+  customPassportAuthenticators.jwtAuthWithCustomErrorHandler,
+  websiteRoute
+);
 
 app.use((err, req, res, next) => {
   res.status(500).json({ status: false, errMsg: "Server Error." });

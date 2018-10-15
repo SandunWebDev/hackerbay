@@ -27,7 +27,7 @@ const sequelize = new Sequelize(
 // Generating all models.
 const models = {};
 models.User = require("./models/User")(sequelize, Sequelize);
-models.User = require("./models/Website")(sequelize, Sequelize);
+models.Website = require("./models/Website")(sequelize, Sequelize);
 
 // Create table structure if they not exist.
 sequelize.sync();

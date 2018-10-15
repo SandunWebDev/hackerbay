@@ -34,7 +34,7 @@ const configs = {
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
-      expiresIn: JWTEXPIRES || "60s"
+      expiresIn: JWTEXPIRES || "3600s"
     }
   },
 
@@ -51,7 +51,7 @@ const configs = {
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
-      expiresIn: JWTEXPIRES || "60s"
+      expiresIn: JWTEXPIRES || "3600s"
     }
   },
 
@@ -68,7 +68,7 @@ const configs = {
     },
     jwt: {
       secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
-      expiresIn: JWTEXPIRES || "ADD JWT EXPIRE DATE HERE"
+      expiresIn: JWTEXPIRES || "3600s"
     }
   }
 };
