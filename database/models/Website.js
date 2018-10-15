@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) =>
         deferrable: sequelize.Deferrable.INITIALLY_IMMEDIATE
       }
     },
-    name: {
+    websiteName: {
       type: DataTypes.TEXT,
       allowNull: false,
       unique: true,
