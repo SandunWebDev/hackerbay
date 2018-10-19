@@ -9,7 +9,7 @@ const {
 module.exports.website_addRoutePOST = (
   req,
   res,
-  { User = UserModel, Website = WebsiteModel } = {} // Object destructuring for easy dependency injection.
+  { Website = WebsiteModel } = {} // Object destructuring for easy dependency injection.
 ) => {
   const { websiteName = "", url = "" } = req.body;
   const { id: userId } = req.user;
@@ -27,7 +27,7 @@ module.exports.website_addRoutePOST = (
     const parsedURL = parseURL(normalizedURL);
     finalizedURL = `${parsedURL.protocol}//${parsedURL.host}`; // Only protocol + host (ex: http://google.com)
   } catch (err) {
-    // This error handler for errors happen in normalizeUrl and parseUrl due to urls that suck.
+    // This error handler for errors happen in normalizeUrl and parseUrl due to urls that not parsable at all.
     return res
       .status(400)
       .json({ status: false, errMsg: "Given URL is not valid." });
@@ -65,9 +65,35 @@ module.exports.website_addRoutePOST = (
     })
     .catch(err => {
       res.status(400).json({
-        sucess: false,
+        success: false,
         errMsg: "Validation Errors.",
         originalError: err
       });
+    });
+};
+
+// Return all web sites regited to current user.
+module.exports.website_listRouteGET = (
+  req,
+  res,
+  { Website = WebsiteModel } = {} // Object destructuring for easy dependency injection.
+) => {
+  const { id: userId } = req.user;
+
+  Website.findAll({
+    where: { userId },
+    include: [
+      {
+        model: UserModel,
+        required: true,
+        attributes: ["name", "email"]
+      }
+    ]
+  })
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .error(err => {
+      res.status(400).json(err);
     });
 };

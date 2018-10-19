@@ -17,7 +17,7 @@ const jwtAuthWithCustomErrorHandler = (req, res, next) => {
 
       // "user" not populated mean not authenticated.
       if (!user)
-        return res.status(400).json({
+        return res.status(401).json({
           success: false,
           errMsg: "Invalid Token.",
           originalError: info

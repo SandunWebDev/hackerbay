@@ -6,15 +6,6 @@ module.exports = (sequelize, DataTypes) =>
       primaryKey: true,
       allowNull: false
     },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-        deferrable: sequelize.Deferrable.INITIALLY_IMMEDIATE
-      }
-    },
     websiteName: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -35,6 +26,7 @@ module.exports = (sequelize, DataTypes) =>
     onlineStatus: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: true,
       validate: {
         notEmpty: true
       }
