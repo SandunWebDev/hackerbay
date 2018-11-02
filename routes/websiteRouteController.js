@@ -1,18 +1,18 @@
 const normalizeUrl = require("normalize-url");
 const parseURL = require("url-parse");
 const Joi = require("joi");
-const {
-  User: UserModel,
-  Website: WebsiteModel
-} = require("../database/connect").models;
+const { User, Website } = require("../database/connect").models;
 
-module.exports.website_addRoutePOST = (
-  req,
-  res,
-  { Website = WebsiteModel } = {} // Object destructuring for easy dependency injection.
-) => {
+module.exports.website_addRoutePOST = (req, res) => {
   const { websiteName = "", url = "" } = req.body;
   const { id: userId } = req.user;
+
+  // When necessary data is not provided by user.
+  if (!websiteName || !url) {
+    return res
+      .status(400)
+      .json({ success: false, errMsg: "Neccessary Data is not provided." });
+  }
 
   // Trying to normalize and make valid as much as possible.
   let finalizedURL = "";
@@ -30,15 +30,15 @@ module.exports.website_addRoutePOST = (
     // This error handler for errors happen in normalizeUrl and parseUrl due to urls that not parsable at all.
     return res
       .status(400)
-      .json({ status: false, errMsg: "Given URL is not valid." });
+      .json({ success: false, errMsg: "Given URL is not valid." });
   }
 
   // Validating Inputs.
   const validationSchema = Joi.object().keys({
-    websiteName: Joi.string()
-      .alphanum()
-      .required(),
-    url: Joi.string().uri()
+    websiteName: Joi.string().required(),
+    url: Joi.string()
+      .uri()
+      .required()
   });
 
   const validationResult = Joi.validate(
@@ -61,7 +61,7 @@ module.exports.website_addRoutePOST = (
     onlineStatus: true
   })
     .then(() => {
-      res.status(200).json({ sucess: true, added: finalizedURL });
+      res.status(200).json({ success: true, added: finalizedURL });
     })
     .catch(err => {
       res.status(400).json({
@@ -73,18 +73,14 @@ module.exports.website_addRoutePOST = (
 };
 
 // Return all web sites regited to current user.
-module.exports.website_listRouteGET = (
-  req,
-  res,
-  { Website = WebsiteModel } = {} // Object destructuring for easy dependency injection.
-) => {
+module.exports.website_listRouteGET = (req, res) => {
   const { id: userId } = req.user;
 
   Website.findAll({
     where: { userId },
     include: [
       {
-        model: UserModel,
+        model: User,
         required: true,
         attributes: ["name", "email"]
       }
