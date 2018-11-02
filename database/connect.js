@@ -25,8 +25,16 @@ const sequelize = new Sequelize(
 );
 
 // Generating all models.
-const models = {};
-models.User = require("./models/User")(sequelize, Sequelize);
+const User = require("./models/User")(sequelize, Sequelize);
+const Website = require("./models/Website")(sequelize, Sequelize);
+
+// Creating relationship with tables.
+Website.belongsTo(User);
+
+const models = {
+  User,
+  Website
+};
 
 // Create table structure if they not exist.
 sequelize.sync();

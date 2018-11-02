@@ -1,10 +1,12 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy;
+const extractJWT = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const config = require("../configs/main");
-const { User } = require("../database/connect").models;
+const config = require("../main");
+const { User } = require("../../database/connect").models;
 
 passport.use(
   new LocalStrategy(
@@ -43,4 +45,34 @@ passport.use(
         .catch(() => done("Database Error"));
     }
   )
+);
+
+// JWT Token Authentication
+
+const extractOptionsForJWT = {
+  jwtFromRequest: extractJWT.fromExtractors([
+    extractJWT.fromAuthHeaderAsBearerToken(),
+    extractJWT.fromBodyField("token"),
+    extractJWT.fromUrlQueryParameter("token")
+  ]),
+  secretOrKey: config.jwt.secretKey
+};
+
+passport.use(
+  new JWTStrategy(extractOptionsForJWT, (jwtPayload, done) => {
+    if (!jwtPayload.id) {
+      return done(null, false, "Invalid Token.");
+    }
+
+    User.findById(jwtPayload.id)
+      .then(user => {
+        if (!user) {
+          return done(null, false, "User doesn't exist Or Invalid Token.");
+        }
+
+        // Authentication successful. This populate "req.user" with database "user" object.
+        return done(null, user);
+      })
+      .catch(() => done("Database Error"));
+  })
 );
