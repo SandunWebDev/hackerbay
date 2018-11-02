@@ -87,9 +87,13 @@ module.exports.website_listRouteGET = (req, res) => {
     ]
   })
     .then(result => {
-      res.status(200).json(result);
+      res.status(200).json({ success: true, result });
     })
-    .error(err => {
-      res.status(400).json(err);
+    .catch(err => {
+      res.status(400).json({
+        success: false,
+        errMsg: "Database Error Occured",
+        originalError: err
+      });
     });
 };

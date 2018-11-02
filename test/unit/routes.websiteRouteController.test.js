@@ -3,9 +3,12 @@ const sinon = require("sinon");
 const httpMocks = require("node-mocks-http");
 const events = require("events");
 
-const { User, Website } = require("../../database/connect").models;
+const { Website } = require("../../database/connect").models;
 
-const { website_addRoutePOST } = require("../../routes/websiteRouteController");
+const {
+  website_addRoutePOST,
+  website_listRouteGET
+} = require("../../routes/websiteRouteController");
 
 describe("'/website/' Route", function() {
   describe("'/website/add' Route", function() {
@@ -215,6 +218,80 @@ describe("'/website/' Route", function() {
       });
 
       website_addRoutePOST(req, res);
+    });
+  });
+
+  describe("'/website/list' Route", function() {
+    let res;
+
+    beforeEach(() => {
+      res = httpMocks.createResponse({
+        eventEmitter: events.EventEmitter
+      });
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it("Should return status code 200 & array of web sites for current user when successful.", function(done) {
+      const req = httpMocks.createRequest({
+        method: "GET"
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Stubbing database quering and simulating return of array of website data for current user.
+      sinon.stub(Website, "findAll").resolves([{}, {}]);
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          const recivedData = JSON.parse(res._getData());
+          expect(res.statusCode).to.equal(200);
+          expect(recivedData).to.have.deep.include({
+            success: true,
+            result: [{}, {}]
+          });
+
+          done();
+        }, 0);
+      });
+
+      website_listRouteGET(req, res);
+    });
+
+    it("Should return status code 400 when error occured in database operation. ", function(done) {
+      const req = httpMocks.createRequest({
+        method: "GET"
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Stubbing database quering and simulating database operation error.
+      sinon.stub(Website, "findAll").rejects("My Error");
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          const recivedData = JSON.parse(res._getData());
+          expect(res.statusCode).to.equal(400);
+          expect(recivedData).to.contain.keys("success", "errMsg");
+          expect(recivedData).to.have.deep.include({
+            success: false
+          });
+
+          done();
+        }, 0);
+      });
+
+      website_listRouteGET(req, res);
     });
   });
 });
