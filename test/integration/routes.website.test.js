@@ -48,9 +48,10 @@ describe("'/website' Route", () => {
         .expect("Content-Type", /json/)
         .end(function(err, res) {
           expect(res.statusCode).to.be.equal(200);
-          expect(res.body).to.have.deep.include({
-            success: true,
-            added: "http://example.com"
+          expect(res.body.success).to.be.equal(true);
+          expect(res.body.added).to.have.deep.include({
+            websiteName: "Example",
+            url: "http://example.com"
           });
           expect(res.body).to.have.key(["success", "added"]);
 

@@ -60,8 +60,8 @@ module.exports.website_addRoutePOST = (req, res) => {
     url: finalizedURL,
     onlineStatus: true
   })
-    .then(() => {
-      res.status(200).json({ success: true, added: finalizedURL });
+    .then(result => {
+      res.status(200).json({ success: true, added: result });
     })
     .catch(err => {
       res.status(400).json({

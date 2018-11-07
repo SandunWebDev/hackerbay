@@ -52,13 +52,7 @@ describe("'/website/' Route", function() {
       res.on("end", function() {
         // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
         setTimeout(() => {
-          const recivedData = JSON.parse(res._getData());
           expect(res.statusCode).to.equal(200);
-          expect(recivedData).to.have.deep.include({
-            success: true,
-            added: "http://example.com"
-          });
-
           done();
         }, 0);
       });
@@ -66,7 +60,7 @@ describe("'/website/' Route", function() {
       website_addRoutePOST(req, res);
     });
 
-    it("Should return JSON body containing '{status:'success', added:'WEBSITEURL'}' & status code 200  when successfull.", function(done) {
+    it("Should return JSON body containing '{status:'success', added:'{....}'}' & status code 200  when successfull.", function(done) {
       const req = httpMocks.createRequest({
         method: "POST",
         body: {
@@ -97,9 +91,9 @@ describe("'/website/' Route", function() {
           const recivedData = JSON.parse(res._getData());
 
           expect(recivedData).to.have.deep.include({
-            success: true,
-            added: "http://example.com"
+            success: true
           });
+          expect(recivedData).to.have.property("added");
           expect(res.statusCode).to.equal(200);
 
           done();
