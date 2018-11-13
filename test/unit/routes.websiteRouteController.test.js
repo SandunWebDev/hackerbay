@@ -7,6 +7,7 @@ const { Website } = require("../../database/connect").models;
 
 const {
   website_addRoutePOST,
+  website_deleteRouteDELETE,
   website_listRouteGET
 } = require("../../routes/websiteRouteController");
 
@@ -212,6 +213,191 @@ describe("'/website/' Route", function() {
       });
 
       website_addRoutePOST(req, res);
+    });
+  });
+
+  describe("'/website/delete' Route", function() {
+    let res;
+
+    beforeEach(() => {
+      res = httpMocks.createResponse({
+        eventEmitter: events.EventEmitter
+      });
+    });
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it("Should return status code 200 when necessary data is provided and successfully deleted.", function(done) {
+      const req = httpMocks.createRequest({
+        method: "DELETE",
+        body: {
+          websiteItemId: "123ABC"
+        }
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Mocking value returned by findById
+      const findById_ReturnValue = {
+        destroy: () => Promise.resolve(1)
+      };
+
+      // Stubbing database findById and making sure get called with appopriate data.
+      sinon
+        .stub(Website, "findById")
+        .withArgs("123ABC")
+        .resolves(findById_ReturnValue);
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          expect(res.statusCode).to.equal(200);
+          done();
+        }, 0);
+      });
+
+      website_deleteRouteDELETE(req, res);
+    });
+
+    it("Should return JSON body containing '{status:true, deletedWebsiteItemId:'ITEMID'}' & status code 200  when successfull.", function(done) {
+      const req = httpMocks.createRequest({
+        method: "DELETE",
+        body: {
+          websiteItemId: "123ABC"
+        }
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Mocking value returned by findById
+      const findById_ReturnValue = {
+        destroy: () => Promise.resolve(1)
+      };
+
+      // Stubbing database findById and making sure get called with appopriate data.
+      sinon
+        .stub(Website, "findById")
+        .withArgs("123ABC")
+        .resolves(findById_ReturnValue);
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          const recivedData = JSON.parse(res._getData());
+
+          expect(res.statusCode).to.equal(200);
+          expect(recivedData).to.have.deep.include({
+            success: true,
+            deletedWebsiteItemId: "123ABC"
+          });
+          done();
+        }, 0);
+      });
+
+      website_deleteRouteDELETE(req, res);
+    });
+
+    it("Should return JSON body containing '{status:'false', errMsg:'ERROR'}' & status code 400 when necessary data like 'websiteItemId' is not provided.", function() {
+      const req = httpMocks.createRequest({
+        method: "DELETE",
+        body: {
+          // mocking websiteItemId is not provided.
+        }
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      website_deleteRouteDELETE(req, res);
+
+      const recivedData = JSON.parse(res._getData());
+
+      expect(res.statusCode).to.equal(400);
+      expect(recivedData).to.contain.keys("success", "errMsg");
+      expect(recivedData).to.have.deep.include({ success: false });
+    });
+
+    it("Should return JSON body containing '{status:'false', errMsg:'ERROR'}' & status code 400 when some error occured in database like provided item id not exist", function(done) {
+      const req = httpMocks.createRequest({
+        method: "DELETE",
+        body: {
+          websiteItemId: "123ABC"
+        }
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Stubbing database findById to reject
+      sinon
+        .stub(Website, "findById")
+        .withArgs("123ABC")
+        .rejects(1);
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          const recivedData = JSON.parse(res._getData());
+
+          expect(res.statusCode).to.equal(400);
+          expect(recivedData).to.contain.keys("success", "errMsg");
+          expect(recivedData).to.have.deep.include({ success: false });
+          done();
+        }, 0);
+      });
+
+      website_deleteRouteDELETE(req, res);
+    });
+
+    it("Should return JSON body containing '{status:'false', errMsg:'ERROR'}' & status code 400 when some error occured in database while deleting user.", function(done) {
+      const req = httpMocks.createRequest({
+        method: "DELETE",
+        body: {
+          websiteItemId: "123ABC"
+        }
+      });
+
+      // Mocking user is authenticated by passport.
+      req.user = {
+        id: "ABCD!@#123"
+      };
+
+      // Mocking value returned by findById to reject to simulate deleting failed.
+      const findById_ReturnValue = {
+        destroy: () => Promise.rejects(1)
+      };
+
+      // Stubbing database findById and making sure get called with appopriate data.
+      sinon
+        .stub(Website, "findById")
+        .withArgs("123ABC")
+        .resolves(findById_ReturnValue);
+
+      res.on("end", function() {
+        // using setTimeOut becuase its seam "done()"" never get called if assertion failed.
+        setTimeout(() => {
+          const recivedData = JSON.parse(res._getData());
+
+          expect(res.statusCode).to.equal(400);
+          expect(recivedData).to.contain.keys("success", "errMsg");
+          expect(recivedData).to.have.deep.include({ success: false });
+          done();
+        }, 0);
+      });
+
+      website_deleteRouteDELETE(req, res);
     });
   });
 

@@ -72,6 +72,43 @@ module.exports.website_addRoutePOST = (req, res) => {
     });
 };
 
+module.exports.website_deleteRouteDELETE = (req, res) => {
+  const { websiteItemId = "" } = req.body;
+
+  // When necessary data is not provided by user.
+  if (!websiteItemId) {
+    return res
+      .status(400)
+      .json({ success: false, errMsg: "Neccessary Data is not provided." });
+  }
+
+  Website.findById(websiteItemId)
+    .then(result => {
+      // Record Found. Deleting.
+      result
+        .destroy()
+        .then(() => {
+          res
+            .status(200)
+            .json({ success: true, deletedWebsiteItemId: websiteItemId });
+        })
+        .catch(err => {
+          res.status(400).json({
+            success: false,
+            errMsg: "Delete Failed.",
+            originalError: err
+          });
+        });
+    })
+    .catch(err => {
+      res.status(400).json({
+        success: false,
+        errMsg: "This website id doen't exist.",
+        originalError: err
+      });
+    });
+};
+
 // Return all web sites regited to current user.
 module.exports.website_listRouteGET = (req, res) => {
   const { id: userId } = req.user;
