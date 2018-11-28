@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "cron": "^1.5.0",
+    "dotenv": "^6.1.0",
     "express": "^4.16.3",
     "joi": "^14.0.0",
     "jsonwebtoken": "^8.3.0",
@@ -33,6 +34,7 @@
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
+    "twilio": "^3.24.0",
     "url-parse": "^1.4.3"
   },
   "devDependencies": {

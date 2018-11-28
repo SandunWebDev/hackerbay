@@ -1,8 +1,15 @@
-const { Website } = require("../../database/connect").models;
+const { Website, User } = require("../../database/connect").models;
 
 async function getDatabaseInstanceForEveryURL() {
   return Website.findAll({
-    attributes: ["id", "url", "onlineStatus"]
+    attributes: ["id", "url", "onlineStatus"],
+    include: [
+      {
+        model: User,
+        required: true,
+        attributes: ["name", "email", "phoneNum"]
+      }
+    ]
   })
     .then(result => result)
     .catch(

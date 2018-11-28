@@ -1,14 +1,16 @@
-/* Pass enviroment variables if want to override these. */
+require("dotenv").config(); // Loading enviroment variables from ".env" file. Pass explicit values when  if want to override these.
 
-let {
-  NODE_ENV,
+let { NODE_ENV, CORS_WHITE_LIST } = process.env;
+const {
   PORT,
-  CORS_WHITE_LIST,
   DBNAME,
   DBUSERNAME,
   DBPASSWORD,
   JWTSECRET,
-  JWTEXPIRES
+  JWTEXPIRES,
+  TWILIO_SID,
+  TWILIO_TOKEN,
+  TWILIO_NUMBER
 } = process.env;
 
 NODE_ENV = NODE_ENV || "development"; // Setting up "NODE_ENV" to development if nothing passed.
@@ -20,6 +22,7 @@ if (NODE_ENV === "test") {
 }
 
 // All Configs
+// Config Varaiable are formatted in "VAR_NAME : ENV_VALUE || DEFAULT VALUE"
 const configs = {
   development: {
     server: {
@@ -35,6 +38,11 @@ const configs = {
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "",
+      token: TWILIO_TOKEN || "",
+      number: TWILIO_NUMBER || ""
     }
   },
 
@@ -52,6 +60,11 @@ const configs = {
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "",
+      token: TWILIO_TOKEN || "",
+      number: TWILIO_NUMBER || ""
     }
   },
 
@@ -69,6 +82,11 @@ const configs = {
     jwt: {
       secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "",
+      token: TWILIO_TOKEN || "",
+      number: TWILIO_NUMBER || ""
     }
   }
 };
