@@ -15,7 +15,8 @@ describe("'/website' Route", () => {
     const tempUser = await User.create({
       name: "tempUser",
       email: "tempuser@gmail.com",
-      password: "123456"
+      password: "123456",
+      phoneNum: "+94761234567"
     });
 
     userId = tempUser.id;

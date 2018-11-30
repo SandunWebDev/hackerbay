@@ -6,30 +6,55 @@ const {
   checkWebsiteOnlineStatus: checkWebsiteOnlineStatus__default
 } = require("./helpers/networkRetrivals");
 
-const twilio = require("./helpers/twilio");
+const twilio__default = require("./helpers/twilio");
 
-async function updateWebsitesOnlineStatus({
+// Extracted this part for easy testing.
+function updateWebsiteOnlineStatus__default(websiteInstance, value) {
+  websiteInstance.update({
+    onlineStatus: value
+  });
+}
+
+function extractDetailsFromDatabaseInstance__default(websiteInstance) {
+  const URL = websiteInstance.get("url");
+  const phoneNum = websiteInstance.get("user").get("phoneNum");
+  const username = websiteInstance.get("user").get("name");
+  const previousWebsiteOnlineStatus = websiteInstance.get("onlineStatus");
+
+  return {
+    URL,
+    phoneNum,
+    username,
+    previousWebsiteOnlineStatus
+  };
+}
+
+async function updateAndNotifiy_AboutWebsiteStatus({
   // Using object destructuring & default values For testing purposes.
   getDatabaseInstanceForEveryURL = getDatabaseInstanceForEveryURL__default,
-  checkWebsiteOnlineStatus = checkWebsiteOnlineStatus__default
+  extractDetailsFromDatabaseInstance = extractDetailsFromDatabaseInstance__default,
+  checkWebsiteOnlineStatus = checkWebsiteOnlineStatus__default,
+  twilio = twilio__default,
+  updateWebsiteOnlineStatus = updateWebsiteOnlineStatus__default
 } = {}) {
   const databaseInstanceList = await getDatabaseInstanceForEveryURL();
 
-  databaseInstanceList.forEach(async website => {
+  // Checking each website status have changed and if changed database get updated and notofication get sended.
+  return databaseInstanceList.map(async websiteInstance => {
     try {
-      const URL = website.get("url");
-      const phoneNum = website.get("user").get("phoneNum");
-      const username = website.get("user").get("name");
+      const {
+        URL,
+        phoneNum,
+        username,
+        previousWebsiteOnlineStatus
+      } = extractDetailsFromDatabaseInstance(websiteInstance);
 
-      const previousWebsiteOnlineStatus = website.get("onlineStatus");
       const currentWebsiteOnlineStatus = await checkWebsiteOnlineStatus(URL);
 
       // Only update database and send notifcation when status change.
       if (currentWebsiteOnlineStatus !== previousWebsiteOnlineStatus) {
         // Updating database.
-        website.update({
-          onlineStatus: currentWebsiteOnlineStatus
-        });
+        updateWebsiteOnlineStatus(websiteInstance, currentWebsiteOnlineStatus);
 
         // Sending SMS notification only if user have mobile number stored.
         if (phoneNum) {
@@ -48,24 +73,25 @@ async function updateWebsitesOnlineStatus({
 
           twilio
             .sendSMS("+94789078006", statusMessage)
-            .then(() => console.log("Message Successfully Sended."))
-            .catch(() => console.log("Error Occured While Message Sending."));
+            .then(() => "Message Successfully Sended.")
+            .catch(() => "Error Occured While Message Sending.");
         }
       }
     } catch (err) {
       // Currently if any error occured, Don't make any changes to database about website status. Simplly leave already having status.
-      console.log(
+      console.info(
         "Error Occured While Checking Website Status Or Writing To Database"
       );
     }
   });
 }
 
-updateWebsitesOnlineStatus();
-
 const websitesOnlineStatusUpdator = new CronJob(
   "0 */1 * * * *", // Run per every one minute.
-  updateWebsitesOnlineStatus
+  updateAndNotifiy_AboutWebsiteStatus
 );
 
-module.exports = { websitesOnlineStatusUpdator, updateWebsitesOnlineStatus };
+module.exports = {
+  websitesOnlineStatusUpdator,
+  updateAndNotifiy_AboutWebsiteStatus
+};
