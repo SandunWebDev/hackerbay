@@ -8,7 +8,7 @@ describe("Workers (Integration)", () => {
     sinon.restore();
   });
 
-  describe.only("Cron Jobs", () => {
+  describe("Cron Jobs", () => {
     describe("updateAndNotifiy_AboutWebsiteStatus()", () => {
       let getDatabaseInstanceForEveryURL__STUB;
       let extractDetailsFromDatabaseInstance__STUB;

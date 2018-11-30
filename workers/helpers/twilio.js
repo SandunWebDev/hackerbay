@@ -4,6 +4,7 @@ const config = require("../../configs/main");
 const { sid, token, number: twilioNumber } = config.twilio;
 
 const twilioClient = twilio(sid, token);
+module.exports.twilioClient = twilioClient;
 
 module.exports.sendSMS = function sendSMS(to, message) {
   if (!to || !message) {
@@ -45,7 +46,7 @@ module.exports.validatePhoneNumber = function validatePhoneNumber(phoneNum) {
     }))
     .catch(err => ({
       success: false,
-      error: "Error happend while adding phone number.",
+      error: "Error happend while validating phone number.",
       orgError: err
     }));
 };
@@ -66,24 +67,38 @@ module.exports.addTrustedNumber = async function addTrustedNumber(
       friendlyName: name || phoneNum,
       phoneNumber: phoneNum
     })
-    .then(response => console.log(response))
-    .catch(err =>
-      console.log({
-        success: false,
-        error: "Error happend while adding phone number.",
-        orgError: err
-      })
-    )
-    .done();
+    .then(response => ({
+      success: true,
+      response
+    }))
+    .catch(err => ({
+      success: false,
+      error: "Error happend while adding phone number.",
+      orgError: err
+    }));
 };
 
 module.exports.makeCall = function makeCall(to = "") {
-  twilioClient.calls
+  if (!to) {
+    return {
+      success: false,
+      error: "Necessary data (Phone Number) is not provided."
+    };
+  }
+
+  return twilioClient.calls
     .create({
       url: "http://demo.twilio.com/docs/voice.xml",
       to,
       from: twilioNumber
     })
-    .then(call => console.log(call))
-    .done();
+    .then(call => ({
+      success: true,
+      response: call
+    }))
+    .catch(err => ({
+      success: false,
+      error: "Error happend while making phone call.",
+      orgError: err
+    }));
 };
