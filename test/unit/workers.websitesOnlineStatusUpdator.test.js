@@ -33,6 +33,9 @@ describe("Workers", () => {
           );
 
           expect(isExutionTimeEqual).to.equal(true);
+
+          // Stoping cron job. Otherwise it will hang the test process.
+          websitesOnlineStatusUpdator.stop();
         });
       });
     });
