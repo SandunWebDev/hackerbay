@@ -15,7 +15,7 @@
     "docker:dev": "docker-compose -f docker-compose.yml -f dc-development.yml up --build",
     "docker:prod": "docker-compose -f docker-compose.yml -f dc-production.yml build",
     "docker:stop": "docker-compose -f docker-compose.yml -f dc-development.yml down",
-    "docker:test": "docker exec -e NODE_ENV=test hb-backend-container-dev npm test ",
+    "docker:test": "docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test &&  npm run report-coverage --build",
     "docker:test:coverage": "docker exec hb-backend-container-dev npm run report-coverage"
   },
   "author": "",
