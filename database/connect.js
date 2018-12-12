@@ -13,6 +13,7 @@ const sequelize = new Sequelize(
   config.database.username,
   config.database.password,
   {
+    host: config.database.host,
     dialect: "postgres",
     logging: enableSqlLogging,
     pool: {
@@ -37,7 +38,10 @@ const models = {
 };
 
 // Create table structure if they not exist.
-sequelize.sync();
+sequelize
+  .sync()
+  .then(() => console.info("Successfully Connected To Database."))
+  .catch(e => console.log("Error occured while connecting to databse.", e));
 
 module.exports = {
   sequelize,

@@ -11,7 +11,12 @@
     "test:all": "NODE_ENV=test nyc mocha --recursive --watch",
     "test:unit": "NODE_ENV=test mocha './test/unit/' --recursive --watch",
     "test:integration": "NODE_ENV=test mocha './test/integration/' --recursive --watch",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "docker:dev": "docker-compose -f docker-compose.yml -f dc-development.yml up --build",
+    "docker:prod": "docker-compose -f docker-compose.yml -f dc-production.yml up --build --detach",
+    "docker:stop": "docker-compose down",
+    "docker:test": "docker exec -e NODE_ENV=test hb-backend-container-dev npm test ",
+    "docker:test:coverage": "docker exec hb-backend-container-dev npm run report-coverage"
   },
   "author": "",
   "license": "ISC",
@@ -35,7 +40,8 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
     "twilio": "^3.24.0",
-    "url-parse": "^1.4.3"
+    "url-parse": "^1.4.3",
+    "wait-on": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",

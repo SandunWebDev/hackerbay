@@ -1,4 +1,4 @@
-require("dotenv").config(); // Loading enviroment variables from ".env" file. Pass explicit values when  if want to override these.
+require("dotenv").config(); // Loading enviroment variables from ".env" file. Pass explicit values if want to override these.
 
 let { NODE_ENV, CORS_WHITE_LIST } = process.env;
 const {
@@ -6,6 +6,7 @@ const {
   DBNAME,
   DBUSERNAME,
   DBPASSWORD,
+  DBHOST,
   JWTSECRET,
   JWTEXPIRES,
   TWILIO_SID,
@@ -33,7 +34,8 @@ const configs = {
     database: {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
-      password: DBPASSWORD || "devadmin"
+      password: DBPASSWORD || "devadmin",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
@@ -55,7 +57,8 @@ const configs = {
     database: {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
-      password: DBPASSWORD || "devadmin"
+      password: DBPASSWORD || "devadmin",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
@@ -77,16 +80,17 @@ const configs = {
     database: {
       name: DBNAME || "ADD SERVER DBNAME HERE",
       username: DBUSERNAME || "ADD SERVER USERNAME HERE",
-      password: DBPASSWORD || "ADD SERVER PASSWORD HERE"
+      password: DBPASSWORD || "ADD SERVER PASSWORD HERE",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
       expiresIn: JWTEXPIRES || "3600s"
     },
     twilio: {
-      sid: TWILIO_SID || "",
-      token: TWILIO_TOKEN || "",
-      number: TWILIO_NUMBER || ""
+      sid: TWILIO_SID || "SECRET",
+      token: TWILIO_TOKEN || "TOKEN",
+      number: TWILIO_NUMBER || "NUM"
     }
   }
 };

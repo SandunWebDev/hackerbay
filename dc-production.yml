@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: .
+      target: prod
+    container_name: hb-backend-container-prod
+    image: hb-image-prod
+    command: ./docker/helpers/waitFor db:5432 --timeout=10 --strict -- npm start

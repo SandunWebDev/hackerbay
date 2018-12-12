@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: .
+      # Building only upto dev stage.
+      target: dev
+    container_name: hb-backend-container-dev
+    image: hb-image-dev
+    command: ./docker/helpers/waitFor db:5432 --timeout=10 --strict -- npm run dev
+    # Dynamic mounting. So hot reload & code editing can be done without building again and again.
+    volumes:
+      - .:/usr/app
