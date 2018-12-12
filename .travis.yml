@@ -3,7 +3,12 @@ node_js:
   - 10
 services:
   - docker
+addons:
+  apt:
+    packages:
+      - docker-ce
 before_install:
+  - echo docker --version
   - npm run docker:prod
   - npm run docker:dev -- -d
 script:
