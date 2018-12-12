@@ -6,5 +6,5 @@ services:
       context: .
       target: prod
     container_name: hb-backend-container-prod
-    image: hb-image-prod
+    image: hb-backend-image-prod
     command: ./docker/helpers/waitFor db:5432 --timeout=10 --strict -- npm start
