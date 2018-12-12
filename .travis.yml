@@ -7,12 +7,10 @@ addons:
   apt:
     packages:
       - docker-ce
-before_install:
-  - echo docker --version
-  - npm run docker:build:prod
 script:
-  - npm run docker:test:dev
+  - docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test && npm run report-coverage --build
 after_success:
+  - docker-compose -f docker-compose.yml -f dc-production.yml build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag hb-image-prod sandunwebdev/hb-backend-image-prod:master
   - docker push sandunwebdev/hb-backend-image-prod:master
