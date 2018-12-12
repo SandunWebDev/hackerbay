@@ -9,12 +9,10 @@ addons:
       - docker-ce
 before_install:
   - echo docker --version
-  - npm run docker:prod
-  - npm run docker:dev -- -d
+  - npm run docker:build:prod
 script:
-  - npm run docker:test
+  - npm run docker:test:dev
 after_success:
-  - npm run docker:test:coverage
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag hb-image-prod sandunwebdev/hb-backend-image-prod:master
   - docker push sandunwebdev/hb-backend-image-prod:master
