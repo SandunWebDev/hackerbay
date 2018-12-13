@@ -4,11 +4,12 @@
 */
 
 module.exports = {
-    "extends": ["airbnb-base", "plugin:prettier/recommended"],
-    "rules": {
-        "no-console":"off",
-        "consistent-return":"off",
-        "array-callback-return":"off",
-        "camelcase":"off"
-    }
-}
+  extends: ["airbnb-base", "plugin:prettier/recommended"],
+  rules: {
+    "no-console": "off",
+    "consistent-return": "off",
+    "array-callback-return": "off",
+    camelcase: "off",
+    "prefer-promise-reject-errors": "off"
+  }
+};

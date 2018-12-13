@@ -119,7 +119,8 @@ describe("'/user' Route", function() {
         body: {
           name: "John Doe",
           email: "example@gmail.com",
-          password: "supersecret"
+          password: "supersecret",
+          phoneNum: "+94761234567"
         }
       });
 
@@ -145,7 +146,8 @@ describe("'/user' Route", function() {
         body: {
           name: "John Doe",
           email: "example@gmail.com",
-          password: "supersecret"
+          password: "supersecret",
+          phoneNum: "+94761234567"
         }
       });
 
@@ -179,7 +181,8 @@ describe("'/user' Route", function() {
         body: {
           name: "John Doe",
           email: "example@gmail.com",
-          password: "supersecret"
+          password: "supersecret",
+          phoneNum: "+94761234567"
         }
       });
 
@@ -221,7 +224,8 @@ describe("'/user' Route", function() {
         body: {
           name: "John Doe",
           email: "example@gmail.com",
-          password: "supersecret"
+          password: "supersecret",
+          phoneNum: "+94761234567"
         }
       });
 

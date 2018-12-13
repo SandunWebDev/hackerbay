@@ -1,14 +1,17 @@
-/* Pass enviroment variables if want to override these. */
+require("dotenv").config(); // Loading enviroment variables from ".env" file. Pass explicit values if want to override these.
 
-let {
-  NODE_ENV,
+let { NODE_ENV, CORS_WHITE_LIST } = process.env;
+const {
   PORT,
-  CORS_WHITE_LIST,
   DBNAME,
   DBUSERNAME,
   DBPASSWORD,
+  DBHOST,
   JWTSECRET,
-  JWTEXPIRES
+  JWTEXPIRES,
+  TWILIO_SID,
+  TWILIO_TOKEN,
+  TWILIO_NUMBER
 } = process.env;
 
 NODE_ENV = NODE_ENV || "development"; // Setting up "NODE_ENV" to development if nothing passed.
@@ -20,6 +23,7 @@ if (NODE_ENV === "test") {
 }
 
 // All Configs
+// Config Varaiable are formatted in "VAR_NAME : ENV_VALUE || DEFAULT VALUE"
 const configs = {
   development: {
     server: {
@@ -30,11 +34,17 @@ const configs = {
     database: {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
-      password: DBPASSWORD || "devadmin"
+      password: DBPASSWORD || "devadmin",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "",
+      token: TWILIO_TOKEN || "",
+      number: TWILIO_NUMBER || ""
     }
   },
 
@@ -47,11 +57,17 @@ const configs = {
     database: {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
-      password: DBPASSWORD || "devadmin"
+      password: DBPASSWORD || "devadmin",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "",
+      token: TWILIO_TOKEN || "",
+      number: TWILIO_NUMBER || ""
     }
   },
 
@@ -64,11 +80,17 @@ const configs = {
     database: {
       name: DBNAME || "ADD SERVER DBNAME HERE",
       username: DBUSERNAME || "ADD SERVER USERNAME HERE",
-      password: DBPASSWORD || "ADD SERVER PASSWORD HERE"
+      password: DBPASSWORD || "ADD SERVER PASSWORD HERE",
+      host: DBHOST || "localhost"
     },
     jwt: {
       secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
       expiresIn: JWTEXPIRES || "3600s"
+    },
+    twilio: {
+      sid: TWILIO_SID || "SECRET",
+      token: TWILIO_TOKEN || "TOKEN",
+      number: TWILIO_NUMBER || "NUM"
     }
   }
 };

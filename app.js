@@ -13,11 +13,17 @@ const userRoute = require("./routes/user");
 const websiteRoute = require("./routes/website");
 
 const customPassportAuthenticators = require("./configs/passport/customPassportAuthenticators");
+const {
+  websitesOnlineStatusUpdator
+} = require("./workers/websitesOnlineStatusUpdator");
 
 const app = express();
 
 if (config.server.NODE_ENV !== "test") {
   app.use(morgan("dev"));
+
+  // Starting Cron Job For Updating All Website's Online Status in Every One Minute.
+  websitesOnlineStatusUpdator.start();
 }
 
 app.use(cors({ origin: config.server.CORSWhiteList }));

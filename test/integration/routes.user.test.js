@@ -17,7 +17,8 @@ describe("'/user' Route", () => {
         .send({
           name: "John Doe",
           email: "example@gmail.com",
-          password: "supersecret"
+          password: "supersecret",
+          phoneNum: "+94761234567"
         })
         .expect("Content-Type", /json/)
         .end(function(err, res) {
@@ -40,7 +41,8 @@ describe("'/user' Route", () => {
           name: "John Doe",
           email: "example@gmail.com",
           password:
-            "$2b$10$lNKYy1pa5NuVJRr23e.zGOWB.AoJo1305lmAw2pz/X4EGUqZnNU.e" // Hash for password "supersecret"
+            "$2b$10$lNKYy1pa5NuVJRr23e.zGOWB.AoJo1305lmAw2pz/X4EGUqZnNU.e", // Hash for password "supersecret"
+          phoneNum: "+94761234567"
         });
       }
 

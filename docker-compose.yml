@@ -1,0 +1,49 @@
+version: "3.4"
+
+services:
+  backend:
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - db
+    environment:
+      # Getting env. variable directly from host enviroment OR .env file and pass them into container.
+      - NODE_ENV
+      - PORT
+      - CORS_WHITE_LIST
+
+      - DBNAME
+      - DBUSERNAME
+      - DBPASSWORD
+      - DBHOST
+
+      - JWTSECRET
+      - JWTEXPIRES
+
+      - TWILIO_SID
+      - TWILIO_TOKEN
+      - TWILIO_NUMBER
+
+      - CODECOV_TOKEN
+
+  db:
+    container_name: hb-db-container
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: ${DBNAME}
+      POSTGRES_USER: ${DBUSERNAME}
+      POSTGRES_PASSWORD: ${DBPASSWORD}
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+
+  # Just for easy database management.
+  dbadminer:
+    container_name: hb-dbadminer-container
+    image: adminer
+    ports:
+      - "8080:8080"
+
+# Custome volume to store databse data premenetly.
+volumes:
+  ? dbdata
+  ? mytempdata

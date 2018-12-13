@@ -9,13 +9,13 @@ module.exports.user_signupRoutePOST = (
   res,
   { User = UserModel, bcrypt = bcryptModule, jwt = jwtModule } = {} // Object destructuring for easy dependency injection.
 ) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phoneNum } = req.body;
 
   // Check we have recived the email & password in request body.
-  if (!email || !password || !name) {
+  if (!email || !password || !name || !phoneNum) {
     return res.status(400).json({
       success: false,
-      errMsg: "Name / Email / Password not provided."
+      errMsg: "Name / Email / Password / Phone not provided."
     });
   }
 
@@ -40,7 +40,8 @@ module.exports.user_signupRoutePOST = (
         User.create({
           name,
           email,
-          password: hash
+          password: hash,
+          phoneNum
         })
           .then(createdUser => {
             const token = jwt.sign(

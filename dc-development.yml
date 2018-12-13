@@ -1,0 +1,17 @@
+version: "3.4"
+
+services:
+  backend:
+    build:
+      context: .
+      # Building only upto dev stage.
+      target: dev
+    container_name: hb-backend-container-dev
+    image: hb-backend-image-dev
+    command: ./docker/helpers/waitFor db:5432 --timeout=10 --strict -- npm run dev
+    # Dynamic mounting. So hot reload & code editing can be done without building again and again.
+    volumes:
+      - .:/usr/app
+      # Below is a workaround to prevent host node_modules from accidently getting mounted in container. So host node_module folder don't have no effect on container.
+      # Useful when want to use node/npm both outside container for test/lint, OR CI envoroments, etc.
+      - mytempdata:/usr/app/node_modules
