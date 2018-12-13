@@ -33,7 +33,6 @@ services:
       POSTGRES_DB: ${DBNAME}
       POSTGRES_USER: ${DBUSERNAME}
       POSTGRES_PASSWORD: ${DBPASSWORD}
-
     volumes:
       - "dbdata:/var/lib/postgresql/data"
 

@@ -12,11 +12,9 @@
     "test:unit": "NODE_ENV=test mocha './test/unit/' --recursive --watch",
     "test:integration": "NODE_ENV=test mocha './test/integration/' --recursive --watch",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "docker:run:dev": "docker-compose -f docker-compose.yml -f dc-development.yml up --build",
-    "docker:build:prod": "docker-compose -f docker-compose.yml -f dc-production.yml build",
-    "docker:stop:dev": "docker-compose -f docker-compose.yml -f dc-development.yml down",
-    "docker:test:dev": "docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test && npm run report-coverage --build",
-    "docker:test:coverage": "docker exec hb-backend-container-dev npm run report-coverage"
+    "docker:dev:run": "docker-compose -f docker-compose.yml -f dc-development.yml up --build",
+    "docker:dev:stop": "docker-compose -f docker-compose.yml -f dc-development.yml down -v",
+    "docker:dev:test": "docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test"
   },
   "author": "",
   "license": "ISC",

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#   Use this script to test if a given TCP host/port are available
+
+# This script is used to waitFor another host/port. For example used in docker-compose.yml to wait for postgresdb is up and running.
 
 WAITFORIT_cmdname=${0##*/}
 
