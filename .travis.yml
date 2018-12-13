@@ -6,8 +6,12 @@ services:
 addons:
   apt:
     packages:
+      # Updating Docker.
       - docker-ce
-script:
-  - docker-compose -f docker-compose.yml -f dc-development.yml run --rm -e NODE_ENV=test backend bash -c 'npm test && npm run report-coverage'
-after_success:
-  - ./docker/helpers/dockerHubUpload.sh
+jobs:
+  include:
+    - stage: "Tests"
+      script: docker-compose -f docker-compose.yml -f dc-development.yml run --rm -e NODE_ENV=test backend bash -c 'npm test && npm run report-coverage'
+
+    - stage: "Docker-Deployment"
+      script: ./docker/helpers/dockerHubUpload.sh
