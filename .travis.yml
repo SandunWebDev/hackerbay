@@ -8,7 +8,7 @@ addons:
     packages:
       - docker-ce
 script:
-  - docker-compose -f docker-compose.yml -f dc-development.yml run --rm backend npm test
+  - docker-compose -f docker-compose.yml -f dc-development.yml run --rm backend mocha --recursive
 after_success:
   - docker-compose -f docker-compose.yml -f dc-production.yml build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
