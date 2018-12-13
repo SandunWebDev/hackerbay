@@ -10,7 +10,4 @@ addons:
 script:
   - docker-compose -f docker-compose.yml -f dc-development.yml run --rm -e NODE_ENV=test backend bash -c 'npm test && npm run report-coverage'
 after_success:
-  - docker-compose -f docker-compose.yml -f dc-production.yml build
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker tag hb-backend-image-prod sandunwebdev/hb-backend-image-prod:master
-  - docker push sandunwebdev/hb-backend-image-prod:master
+  - ./docker/helpers/dockerHubUpload.sh
