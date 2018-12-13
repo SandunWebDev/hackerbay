@@ -13,6 +13,7 @@ jobs:
     - stage: "Tests"
       script: docker-compose -f docker-compose.yml -f dc-development.yml run --rm -e NODE_ENV=test backend bash -c 'npm test && npm run report-coverage'
 
-    # Docker deployment only happen for "master" and "release" branches.
+    # Docker deployment only happen for "master" and "release" branches. Pull requesting to those branches also trigger this build unless disabled in Travis CI Settings.
     - stage: "Docker-Deployment"
+      if: branch = master OR branch = release
       script: ./docker/helpers/dockerHubUpload.sh
