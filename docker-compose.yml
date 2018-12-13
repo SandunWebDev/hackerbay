@@ -45,3 +45,4 @@ services:
 # Custome volume to store databse data premenetly.
 volumes:
   ? dbdata
+  ? mytempdata
