@@ -15,4 +15,5 @@ jobs:
 
     # Docker deployment only happen for "master" and "release" branches.
     - stage: "Docker-Deployment"
+      if: env(branch) IN (master, release)
       script: ./docker/helpers/dockerHubUpload.sh
