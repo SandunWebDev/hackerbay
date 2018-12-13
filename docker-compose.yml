@@ -24,6 +24,8 @@ services:
       - TWILIO_TOKEN
       - TWILIO_NUMBER
 
+      - CODECOV_TOKEN
+
   db:
     container_name: hb-db-container
     image: postgres:9.6
