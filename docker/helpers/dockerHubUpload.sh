@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Building Prodction Build"
+echo "Branch"
+echo "$TRAVIS_BRANCH"
+
 if [ "$TRAVIS_BRANCH" == "master" ] ||  [ "$TRAVIS_BRANCH" == "release" ]
 then
    docker-compose -f docker-compose.yml -f dc-production.yml build;
@@ -11,7 +15,7 @@ then
   docker tag hb-backend-image-prod sandunwebdev/hb-backend-image-prod:master;
 
   docker push sandunwebdev/hb-backend-image-prod:master;
-elif [ "$TRAVIS_BRANCH" == "release" ]
+elif [ "$TRAVIS_BRANCH" == "docker-test" ]
 then
   docker tag hb-backend-image-prod sandunwebdev/hb-backend-image-prod:release;
   docker tag hb-backend-image-prod sandunwebdev/hb-backend-image-prod:latest;
