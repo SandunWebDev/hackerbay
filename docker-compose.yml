@@ -28,9 +28,10 @@ services:
     container_name: hb-db-container
     image: postgres:9.6
     environment:
-      POSTGRES_USER: ${DBNAME}
-      POSTGRES_PASSWORD: ${DBUSERNAME}
-      POSTGRES_DB: ${DBPASSWORD}
+      POSTGRES_DB: ${DBNAME}
+      POSTGRES_USER: ${DBUSERNAME}
+      POSTGRES_PASSWORD: ${DBPASSWORD}
+
     volumes:
       - "dbdata:/var/lib/postgresql/data"
 
