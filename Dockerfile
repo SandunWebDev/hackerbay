@@ -12,7 +12,7 @@ WORKDIR /usr/app
 # Copying dependencies first to make use of cache layer.
 COPY package.json package-lock.json* ./
 
-# Only installing product dependencies.
+# Only installing production dependencies.
 RUN npm install --only=production && npm cache clean --force
 
 # Adding node_modules binary to PATH.

@@ -43,7 +43,7 @@ services:
     ports:
       - "8080:8080"
 
-# Custome volume to store databse data premenetly.
+# Custom volume to store database data premenetly.
 volumes:
   ? dbdata
-  ? mytempdata
+  ? backendTempData # For holding container's node_modules without clashing with host node_modules. (See dc-development.yml)
