@@ -8,6 +8,9 @@ addons:
     packages:
       # Updating Docker.
       - docker-ce
+install:
+  - echo "Overriding default npm install because we are using Docker."
+
 jobs:
   include:
     - stage: "Tests"
