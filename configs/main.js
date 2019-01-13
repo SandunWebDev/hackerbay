@@ -19,7 +19,7 @@ CORS_WHITE_LIST = CORS_WHITE_LIST && CORS_WHITE_LIST.split(","); // Setting up "
 
 // Dirty hack to hide console.xxx in test enviroment so they don't distract test results.
 if (NODE_ENV === "test") {
-  console.info = () => {};
+  console.info = () => { };
 }
 
 // All Configs
