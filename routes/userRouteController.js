@@ -1,4 +1,5 @@
-const bcryptModule = require("bcrypt");
+// Previously used "bcrypt" module, but there was strange crashes without any error due to it. So for now just using "bcryptjs" module.
+const bcryptModule = require("bcryptjs");
 const jwtModule = require("jsonwebtoken");
 
 const { User: UserModel } = require("../database/connect").models;
