@@ -14,7 +14,8 @@
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "docker:dev:run": "docker-compose -f docker-compose.yml -f dc-development.yml up --build",
     "docker:dev:stop": "docker-compose -f docker-compose.yml -f dc-development.yml down -v",
-    "docker:dev:test": "docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test"
+    "docker:dev:test": "docker-compose -f docker-compose.yml -f dc-development.yml run -e NODE_ENV=test backend npm test",
+    "docker:prod:run": "docker-compose -f docker-compose.yml -f dc-production.yml up --build -d"
   },
   "author": "",
   "license": "ISC",
