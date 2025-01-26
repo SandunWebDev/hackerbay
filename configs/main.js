@@ -7,6 +7,7 @@ const {
   DBUSERNAME,
   DBPASSWORD,
   DBHOST,
+  DBPORT,
   JWTSECRET,
   JWTEXPIRES,
   TWILIO_SID,
@@ -35,7 +36,7 @@ const configs = {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
       password: DBPASSWORD || "devadmin",
-      host: DBHOST || "localhost"
+      port: DBPORT || "5432"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
@@ -58,7 +59,8 @@ const configs = {
       name: DBNAME || "hackerbay",
       username: DBUSERNAME || "devadmin",
       password: DBPASSWORD || "devadmin",
-      host: DBHOST || "localhost"
+      host: DBHOST || "localhost",
+      port: DBPORT || "5432"
     },
     jwt: {
       secretKey: JWTSECRET || "mySuperSecretsP4$$w0rD",
@@ -81,7 +83,8 @@ const configs = {
       name: DBNAME || "ADD SERVER DBNAME HERE",
       username: DBUSERNAME || "ADD SERVER USERNAME HERE",
       password: DBPASSWORD || "ADD SERVER PASSWORD HERE",
-      host: DBHOST || "localhost"
+      host: DBHOST || "localhost",
+      port: DBPORT || "5432"
     },
     jwt: {
       secretKey: JWTSECRET || "ADD SUPER JWT SECRET HERE",
